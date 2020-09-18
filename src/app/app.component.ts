@@ -1,10 +1,16 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+
+import { AppLoaderService } from '@core/services/app-loader.service';
 
 @Component({
   selector: 'bs-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  template: '<router-outlet></router-outlet>',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
-  title = 'bike-stations';
+export class AppComponent implements OnInit {
+  constructor(private readonly appLoaderService: AppLoaderService) {}
+
+  ngOnInit(): void {
+    this.appLoaderService.initRoutingLoader();
+  }
 }
