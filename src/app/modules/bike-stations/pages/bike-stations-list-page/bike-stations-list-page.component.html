@@ -1,3 +1,4 @@
-<bs-navbar class="navbar"></bs-navbar>
-
-<p>bike-stations-list-page works!</p>
+<ng-container *ngIf="bikeStationsState$ | async as state">
+  <bs-navbar class="navbar"></bs-navbar>
+  <bs-bike-stations-list [bikeStations]="state.bikeStations"></bs-bike-stations-list>
+</ng-container>

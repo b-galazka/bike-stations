@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import { BikeStationsService } from '@bike-stations/services/bike-stations/bike-stations.service';
 
 @Component({
   selector: 'bs-bike-stations-list-page',
@@ -6,6 +8,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   styleUrls: ['./bike-stations-list-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BikeStationsListPageComponent implements OnInit {
-  ngOnInit(): void {}
+export class BikeStationsListPageComponent {
+  readonly bikeStationsState$ = this.bikeStationsService.state$;
+
+  constructor(private readonly bikeStationsService: BikeStationsService) {}
 }

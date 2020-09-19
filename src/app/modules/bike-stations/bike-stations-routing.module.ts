@@ -8,7 +8,6 @@ import { BikeStationsListPageComponent } from './pages/bike-stations-list-page/b
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
     canActivate: [BikeStationsGuard],
     children: [
       { path: '', pathMatch: 'full', component: BikeStationsListPageComponent },

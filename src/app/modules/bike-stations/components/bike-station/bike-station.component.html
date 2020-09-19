@@ -1,0 +1,18 @@
+<header class="header">
+  <h1 class="station-name">{{ bikeStation.name }}</h1>
+  <p class="distance">{{ bikeStation.distance | distance }}</p>
+</header>
+
+<section class="info">
+  <article class="info-item info-item-bikes">
+    <img src="/assets/images/bike.svg" alt="bike" />
+    <p class="info-item-name">{{ 'bikeStations.AvailableBikes' | transloco }}</p>
+    <p class="info-item-number">{{ bikeStation.bikes }}</p>
+  </article>
+
+  <article class="info-item info-item-bike-places">
+    <img src="/assets/images/padlock.svg" alt="padlock" />
+    <p class="info-item-name">{{ 'bikeStations.AvailablePlaces' | transloco }}</p>
+    <p class="info-item-number">{{ bikeStation.bikePlaces }}</p>
+  </article>
+</section>

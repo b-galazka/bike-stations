@@ -1,0 +1,5 @@
+<article *ngFor="let bikeStation of bikeStations; trackBy: trackBikeStations" class="bike-station">
+  <a [routerLink]="bikeStation.id" class="bike-station-link">
+    <bs-bike-station [bikeStation]="bikeStation"></bs-bike-station>
+  </a>
+</article>

@@ -1,0 +1,64 @@
+@import 'variables';
+@import 'mixins';
+
+:host {
+  display: block;
+  padding: 1.5rem 2rem;
+}
+
+.header {
+  margin-bottom: 3rem;
+}
+
+.station-name {
+  color: $gray-300;
+  font-size: 2.2rem;
+  line-height: 2.6rem;
+  margin-bottom: 0.2rem;
+  font-weight: bold;
+}
+
+.distance {
+  color: $gray-200;
+  font-weight: bold;
+}
+
+.info {
+  display: flex;
+}
+
+.info-item {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  &:first-child {
+    padding-right: 1rem;
+  }
+
+  &:last-child {
+    padding-left: 1rem;
+  }
+}
+
+.info-item-name {
+  color: $gray-100;
+  font-weight: medium;
+  margin-top: 1rem;
+}
+
+.info-item-number {
+  font-size: 5rem;
+  line-height: 5.9rem;
+  font-weight: bold;
+  @include helvetica-neue-font-family;
+
+  .info-item-bikes & {
+    color: $green;
+  }
+
+  .info-item-bike-places & {
+    color: $gray-200;
+  }
+}

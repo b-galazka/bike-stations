@@ -1,22 +1,27 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { translocoConfig, TRANSLOCO_CONFIG, TRANSLOCO_LOADER } from '@ngneat/transloco';
+import {
+  translocoConfig,
+  TranslocoModule,
+  TRANSLOCO_CONFIG,
+  TRANSLOCO_LOADER
+} from '@ngneat/transloco';
 
 import { environment } from 'src/environments/environment';
 import { ENVIRONMENT } from './injection-tokens/environment.token';
 import { TranslationsLoaderService } from './services/translations-loader.service';
 
 @NgModule({
-  imports: [HttpClientModule],
+  imports: [HttpClientModule, TranslocoModule],
   providers: [
     { provide: ENVIRONMENT, useValue: environment },
 
     {
       provide: TRANSLOCO_CONFIG,
       useValue: translocoConfig({
-        availableLangs: ['pl'],
+        availableLangs: ['en'],
         prodMode: environment.production,
-        defaultLang: 'pl',
+        defaultLang: 'en',
 
         flatten: {
           aot: environment.production
