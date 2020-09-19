@@ -20,6 +20,7 @@
     "lib": ["es2018", "dom"],
     "paths": {
       "@core/*": ["./src/app/modules/core/*"],
+      "@shared/*": ["./src/app/modules/shared/*"],
       "@bike-stations/*": ["./src/app/modules/bike-stations/*"]
     }
   },

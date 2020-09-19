@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockComponent } from 'ng-mocks';
 
+import { NavbarComponent } from '@bike-stations/components/navbar/navbar.component';
 import { BikeStationDetailsPageComponent } from './bike-station-details-page.component';
 
 describe('BikeStationDetailsPageComponent', () => {
@@ -8,7 +10,7 @@ describe('BikeStationDetailsPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BikeStationDetailsPageComponent]
+      declarations: [BikeStationDetailsPageComponent, MockComponent(NavbarComponent)]
     }).compileComponents();
   });
 
