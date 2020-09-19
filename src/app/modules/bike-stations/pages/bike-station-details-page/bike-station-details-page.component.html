@@ -1,3 +1,16 @@
-<bs-navbar class="navbar" link="../"></bs-navbar>
+<ng-container *ngIf="bikeStationsState$ | async as state">
+  <bs-navbar class="navbar" link="../"></bs-navbar>
 
-<p>bike-station-details-page works!</p>
+  <p *ngIf="!state.selectedBikeStation; else bikeStationDetails" class="error-message">
+    {{ 'bikeStations.StationNotFound' | transloco }}
+  </p>
+
+  <ng-template #bikeStationDetails>
+    <div class="map"></div>
+
+    <bs-bike-station
+      [bikeStation]="state.selectedBikeStation!"
+      class="bike-station-details"
+    ></bs-bike-station>
+  </ng-template>
+</ng-container>

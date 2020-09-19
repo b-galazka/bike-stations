@@ -1,6 +1,7 @@
 {
   "bikeStations": {
     "AvailableBikes": "Available bikes",
-    "AvailablePlaces": "Available places"
+    "AvailablePlaces": "Available places",
+    "StationNotFound": "Station not found"
   }
 }

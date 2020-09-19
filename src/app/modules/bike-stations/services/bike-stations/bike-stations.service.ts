@@ -42,4 +42,12 @@ export class BikeStationsService extends BaseStateService<IBikeStationsState> {
       distance: null
     }));
   }
+
+  selectBikeStation(bikeStationId: string): void {
+    const selectedBikeStation = this.state.bikeStations.find(
+      bikeStation => bikeStation.id === bikeStationId
+    );
+
+    this.setState({ selectedBikeStation });
+  }
 }
