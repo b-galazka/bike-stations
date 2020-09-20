@@ -27,7 +27,7 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": ["src/assets"],
-            "styles": ["src/styles/index.scss", "./node_modules/leaflet/dist/leaflet.css"],
+            "styles": ["./node_modules/leaflet/dist/leaflet.css", "src/styles/index.scss"],
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles"]
             },
@@ -89,7 +89,7 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": ["src/assets"],
-            "styles": ["src/styles/index.scss", "./node_modules/leaflet/dist/leaflet.css"],
+            "styles": ["./node_modules/leaflet/dist/leaflet.css", "src/styles/index.scss"],
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles"]
             },

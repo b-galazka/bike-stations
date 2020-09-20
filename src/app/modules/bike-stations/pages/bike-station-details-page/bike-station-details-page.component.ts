@@ -37,7 +37,7 @@ export class BikeStationDetailsPageComponent implements OnInit, AfterViewInit {
     if (this.mapElementRef && this.bikeStationsService.state.selectedBikeStation) {
       this.bikeStationsMapService.initMap(
         this.mapElementRef.nativeElement,
-        this.bikeStationsService.state.selectedBikeStation.coordinates
+        this.bikeStationsService.state.selectedBikeStation
       );
     }
   }

@@ -1,0 +1,34 @@
+@import 'variables';
+
+.leaflet-container {
+  .leaflet-div-icon {
+    background-color: transparent;
+    border: none;
+  }
+
+  .leaflet-bike-marker-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .leaflet-bike-marker-icon-wrapper {
+    border-radius: 50%;
+    background-color: $white;
+    box-shadow: 0px 0.5px 0px rgba(0, 0, 0, 0.0780118), 0px 0px 2px rgba(0, 0, 0, 0.0999774),
+      0px 0px 0px 0.5px #efefef;
+    line-height: 0;
+    padding: 5px;
+  }
+
+  .leaflet-bike-marker-icon {
+    width: 15px;
+  }
+
+  .leaflet-bike-marker-bikes-amount {
+    margin-left: 4px;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 1;
+    color: $green;
+  }
+}
