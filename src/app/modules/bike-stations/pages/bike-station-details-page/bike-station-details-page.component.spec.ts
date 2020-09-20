@@ -24,6 +24,12 @@ describe('BikeStationDetailsPageComponent', () => {
     state$: of({ isMobileDevice: false })
   };
 
+  const bikeStationsStateServiceMock = jasmine.createSpyObj(
+    getClassMethodsNames(BikeStationsStateService)
+  );
+
+  bikeStationsStateServiceMock.state = {};
+
   let component: BikeStationDetailsPageComponent;
   let fixture: ComponentFixture<BikeStationDetailsPageComponent>;
 
@@ -37,7 +43,7 @@ describe('BikeStationDetailsPageComponent', () => {
       providers: [
         {
           provide: BikeStationsStateService,
-          useValue: jasmine.createSpyObj(getClassMethodsNames(BikeStationsStateService))
+          useValue: bikeStationsStateServiceMock
         },
         { provide: GeolocationStateService, useValue: geolocationStateServiceMock },
         { provide: WINDOW, useValue: window },

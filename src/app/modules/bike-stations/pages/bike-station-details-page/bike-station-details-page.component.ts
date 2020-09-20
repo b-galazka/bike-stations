@@ -15,6 +15,7 @@ import { filter, pluck, takeUntil } from 'rxjs/operators';
 
 import { BikeStationsStateService } from '@bike-stations/services/bike-stations/bike-stations-state.service';
 import { WINDOW } from '@core/injection-tokens/window.token';
+import { AppTitleService } from '@core/services/app-title.service';
 import { AppStateService } from '@core/services/state/app-state.service';
 import { GeolocationStateService } from '@core/services/state/geolocation-state.service';
 import { LatLng } from 'leaflet';
@@ -41,13 +42,20 @@ export class BikeStationDetailsPageComponent implements OnInit, AfterViewInit, O
     private readonly bikeStationsMapService: BikeStationsMapService,
     private readonly geolocationStateService: GeolocationStateService,
     private readonly elementRef: ElementRef,
-    private readonly appStateService: AppStateService
+    private readonly appStateService: AppStateService,
+    private readonly appTitleService: AppTitleService
   ) {}
 
   ngOnInit(): void {
     this.bikeStationsStateService.selectBikeStation(
       this.activatedRoute.snapshot.params.bikeStationId
     );
+
+    if (this.bikeStationsStateService.state.selectedBikeStation) {
+      this.appTitleService.setPageTitle(
+        this.bikeStationsStateService.state.selectedBikeStation.name
+      );
+    }
   }
 
   ngAfterViewInit(): void {
