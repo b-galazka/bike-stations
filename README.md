@@ -2,6 +2,10 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.2.
 
+## Setup
+
+[Google Maps API key](https://developers.google.com/maps/documentation/javascript/get-api-key) must be placed in `src/environments/environment.json` to make map work properly. Billings must be enabled on your Google account - otherwise `For development purposes only` text will appear on the map and custom map's styles will not work.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
