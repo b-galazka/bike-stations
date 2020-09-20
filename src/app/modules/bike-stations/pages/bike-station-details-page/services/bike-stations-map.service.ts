@@ -3,7 +3,9 @@ import { Inject, Injectable } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet.gridlayer.googlemutant';
 
+import { CONFIG } from '@core/injection-tokens/config.token';
 import { ENVIRONMENT } from '@core/injection-tokens/environment.token';
+import { config } from 'src/config';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
@@ -12,7 +14,8 @@ export class BikeStationsMapService {
 
   constructor(
     @Inject(DOCUMENT) private readonly document: Document,
-    @Inject(ENVIRONMENT) private readonly env: typeof environment
+    @Inject(ENVIRONMENT) private readonly env: typeof environment,
+    @Inject(CONFIG) private readonly appConfig: typeof config
   ) {}
 
   initMap(mapContainer: HTMLElement, bikeStationCoordinates: L.LatLng): void {
@@ -25,7 +28,10 @@ export class BikeStationsMapService {
       zoom: 18
     });
 
-    const googleMapsTiles = L.gridLayer.googleMutant({ type: 'roadmap' }).addTo(map);
+    const googleMapsTiles = L.gridLayer.googleMutant({
+      type: 'roadmap',
+      styles: this.appConfig.googleMapsStyles
+    });
 
     googleMapsTiles.addTo(map);
   }

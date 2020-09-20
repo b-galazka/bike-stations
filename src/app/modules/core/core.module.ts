@@ -7,7 +7,9 @@ import {
   TRANSLOCO_LOADER
 } from '@ngneat/transloco';
 
+import { config } from 'src/config';
 import { environment } from 'src/environments/environment';
+import { CONFIG } from './injection-tokens/config.token';
 import { ENVIRONMENT } from './injection-tokens/environment.token';
 import { TranslationsLoaderService } from './services/translations-loader.service';
 
@@ -15,6 +17,7 @@ import { TranslationsLoaderService } from './services/translations-loader.servic
   imports: [HttpClientModule, TranslocoModule],
   providers: [
     { provide: ENVIRONMENT, useValue: environment },
+    { provide: CONFIG, useValue: config },
 
     {
       provide: TRANSLOCO_CONFIG,
