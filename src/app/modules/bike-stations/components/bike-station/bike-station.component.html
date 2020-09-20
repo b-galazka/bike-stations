@@ -1,6 +1,10 @@
 <header class="header">
   <h1 class="station-name">{{ bikeStation.name }}</h1>
-  <p class="distance">{{ bikeStation.distance | distance }}</p>
+
+  <p class="distance">
+    {{ bikeStation.distance | distance }}
+    {{ bikeStation.distance | distanceUnitTranslationKey | transloco }}
+  </p>
 </header>
 
 <section class="info">

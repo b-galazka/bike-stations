@@ -6,11 +6,15 @@ import {
   TRANSLOCO_CONFIG,
   TRANSLOCO_LOADER
 } from '@ngneat/transloco';
+import * as Leaflet from 'leaflet';
+import 'leaflet.gridlayer.googlemutant';
 
 import { config } from 'src/config';
 import { environment } from 'src/environments/environment';
 import { CONFIG } from './injection-tokens/config.token';
 import { ENVIRONMENT } from './injection-tokens/environment.token';
+import { LEAFLET } from './injection-tokens/leaflet.token';
+import { NAVIGATOR } from './injection-tokens/navigator.token';
 import { TranslationsLoaderService } from './services/translations-loader.service';
 
 @NgModule({
@@ -18,6 +22,8 @@ import { TranslationsLoaderService } from './services/translations-loader.servic
   providers: [
     { provide: ENVIRONMENT, useValue: environment },
     { provide: CONFIG, useValue: config },
+    { provide: NAVIGATOR, useValue: navigator },
+    { provide: LEAFLET, useValue: Leaflet },
 
     {
       provide: TRANSLOCO_CONFIG,

@@ -3,7 +3,8 @@ import { TranslocoTestingModule } from '@ngneat/transloco';
 import { LatLng } from 'leaflet';
 
 import { BikeStationComponent } from './bike-station.component';
-import { DistancePipe } from './distance/distance.pipe';
+import { DistanceUnitTranslationKeyPipe } from './pipes/distance-unit-translation-key.pipe';
+import { DistancePipe } from './pipes/distance.pipe';
 
 describe('BikeStationComponent', () => {
   let component: BikeStationComponent;
@@ -11,7 +12,7 @@ describe('BikeStationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BikeStationComponent, DistancePipe],
+      declarations: [BikeStationComponent, DistancePipe, DistanceUnitTranslationKeyPipe],
       imports: [TranslocoTestingModule]
     }).compileComponents();
   });

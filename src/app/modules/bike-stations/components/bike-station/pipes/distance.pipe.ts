@@ -9,7 +9,8 @@ export class DistancePipe implements PipeTransform {
       return '-';
     }
 
-    // TODO: prettify distance
-    return '';
+    const kilometerInMeters = 1000;
+
+    return distance < kilometerInMeters ? `${distance}` : (distance / kilometerInMeters).toFixed(1);
   }
 }

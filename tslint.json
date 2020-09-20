@@ -139,7 +139,6 @@
         "order": ["static-field", "instance-field", "static-method", "instance-method"]
       }
     ],
-    "no-non-null-assertion": true,
     "use-life-cycle-interface": true,
     "unnecessary-constructor": true
   }

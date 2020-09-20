@@ -3,5 +3,9 @@
     "AvailableBikes": "Available bikes",
     "AvailablePlaces": "Available places",
     "StationNotFound": "Station not found"
+  },
+  "common": {
+    "m": "m",
+    "km": "km"
   }
 }

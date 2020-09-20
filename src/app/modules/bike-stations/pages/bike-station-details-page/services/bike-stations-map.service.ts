@@ -1,11 +1,11 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, OnDestroy } from '@angular/core';
-import * as L from 'leaflet';
-import 'leaflet.gridlayer.googlemutant';
+import * as Leaflet from 'leaflet';
 
 import { IBikeStation } from '@bike-stations/interfaces/bike-station.interface';
 import { CONFIG } from '@core/injection-tokens/config.token';
 import { ENVIRONMENT } from '@core/injection-tokens/environment.token';
+import { LEAFLET } from '@core/injection-tokens/leaflet.token';
 import { config } from 'src/config';
 import { environment } from 'src/environments/environment';
 
@@ -13,16 +13,17 @@ import { environment } from 'src/environments/environment';
 export class BikeStationsMapService implements OnDestroy {
   private readonly googleMapsScriptId = 'googleMapsScript';
 
-  private map: L.Map;
+  private map: Leaflet.Map;
 
   constructor(
     @Inject(DOCUMENT) private readonly document: Document,
     @Inject(ENVIRONMENT) private readonly env: typeof environment,
-    @Inject(CONFIG) private readonly appConfig: typeof config
+    @Inject(CONFIG) private readonly appConfig: typeof config,
+    @Inject(LEAFLET) private readonly leaflet: typeof Leaflet
   ) {}
 
   initMap(mapContainer: HTMLElement, bikeStation: IBikeStation): void {
-    this.map = L.map(mapContainer, {
+    this.map = this.leaflet.map(mapContainer, {
       zoomControl: false,
       attributionControl: false,
       center: bikeStation.coordinates,
@@ -36,7 +37,7 @@ export class BikeStationsMapService implements OnDestroy {
   private initGoogleMapsTiles(): void {
     this.insertGoogleMapsScript();
 
-    const googleMapsTiles = L.gridLayer.googleMutant({
+    const googleMapsTiles = this.leaflet.gridLayer.googleMutant({
       type: 'roadmap',
       styles: this.appConfig.googleMapsStyles
     });
@@ -72,8 +73,8 @@ export class BikeStationsMapService implements OnDestroy {
       </div>
     `;
 
-    const divIcon = L.divIcon({ html: iconTemplate, iconSize: undefined });
-    const marker = L.marker(bikeStation.coordinates, { icon: divIcon });
+    const divIcon = this.leaflet.divIcon({ html: iconTemplate, iconSize: undefined });
+    const marker = this.leaflet.marker(bikeStation.coordinates, { icon: divIcon });
 
     marker.addTo(this.map);
   }

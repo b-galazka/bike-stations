@@ -1,26 +1,59 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { LatLng } from 'leaflet';
-import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { filter, map, pluck, takeUntil } from 'rxjs/operators';
 
 import { IBikeStation } from '@bike-stations/interfaces/bike-station.interface';
 import { IBikeStationsState } from '@bike-stations/interfaces/bike-stations-state.interface';
 import { ENVIRONMENT } from '@core/injection-tokens/environment.token';
 import { BaseStateService } from '@core/services/base-state.service';
+import { GeolocationService } from '@core/services/geolocation.service';
 import { environment } from 'src/environments/environment';
 import { IBikeStationsResponse } from './interfaces/bike-stations-response.interface';
 
 @Injectable()
-export class BikeStationsService extends BaseStateService<IBikeStationsState> {
+export class BikeStationsService extends BaseStateService<IBikeStationsState> implements OnDestroy {
+  private readonly destroy$ = new Subject<void>();
+
   constructor(
+    @Inject(ENVIRONMENT) private readonly env: typeof environment,
     private readonly httpClient: HttpClient,
-    @Inject(ENVIRONMENT) private readonly env: typeof environment
+    private readonly geolocationService: GeolocationService
   ) {
     super({
       areBikeStationsLoaded: false,
       bikeStations: [],
       selectedBikeStation: null
     });
+
+    this.initCurrentPositionWatching();
+  }
+
+  private initCurrentPositionWatching(): void {
+    this.geolocationService.state$
+      .pipe(
+        pluck('currentPosition'),
+        filter(currentPosition => currentPosition instanceof LatLng),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(currentPosition => this.updateBikeStationsDistances(currentPosition!));
+  }
+
+  private updateBikeStationsDistances(currentPosition: LatLng): void {
+    const bikeStations = this.state.bikeStations.map(bikeStation => ({
+      ...bikeStation,
+      distance: bikeStation.coordinates.distanceTo(currentPosition)
+    }));
+
+    const selectedBikeStation: IBikeStation | null = this.state.selectedBikeStation
+      ? {
+          ...this.state.selectedBikeStation,
+          distance: this.state.selectedBikeStation.coordinates.distanceTo(currentPosition)
+        }
+      : null;
+
+    this.setState({ bikeStations, selectedBikeStation });
   }
 
   loadBikeStations(): void {
@@ -35,15 +68,16 @@ export class BikeStationsService extends BaseStateService<IBikeStationsState> {
   private mapBikeStationsResponse(res: IBikeStationsResponse): IBikeStation[] {
     return res.features.map(({ geometry, id, properties }) => {
       const [longitude, latitude] = geometry.coordinates;
+      const stationCoordinates = new LatLng(latitude, longitude);
 
       return {
         id,
-        coordinates: new LatLng(latitude, longitude),
+        coordinates: stationCoordinates,
         bikes: +properties.bikes,
         bikePlaces: +properties.bike_racks,
         name: properties.label,
-        // TODO: calc distance
-        distance: null
+        distance:
+          this.geolocationService.state.currentPosition?.distanceTo(stationCoordinates) ?? null
       };
     });
   }
@@ -54,5 +88,10 @@ export class BikeStationsService extends BaseStateService<IBikeStationsState> {
     );
 
     this.setState({ selectedBikeStation });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
