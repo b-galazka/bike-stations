@@ -7,13 +7,14 @@ import { NavbarComponent } from '@bike-stations/components/navbar/navbar.compone
 import { BikeStationsService } from '@bike-stations/services/bike-stations/bike-stations.service';
 import { getClassMethodsNames } from '@shared/utils/get-class-methods-names.util';
 import { BikeStationDetailsPageComponent } from './bike-station-details-page.component';
+import { BikeStationsMapService } from './services/bike-stations-map.service';
 
 describe('BikeStationDetailsPageComponent', () => {
   let component: BikeStationDetailsPageComponent;
   let fixture: ComponentFixture<BikeStationDetailsPageComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       declarations: [
         BikeStationDetailsPageComponent,
         MockComponent(NavbarComponent),
@@ -26,7 +27,20 @@ describe('BikeStationDetailsPageComponent', () => {
         }
       ],
       imports: [RouterTestingModule]
-    }).compileComponents();
+    });
+
+    TestBed.overrideComponent(BikeStationDetailsPageComponent, {
+      set: {
+        providers: [
+          {
+            provide: BikeStationsMapService,
+            useValue: jasmine.createSpyObj(getClassMethodsNames(BikeStationsMapService))
+          }
+        ]
+      }
+    });
+
+    await TestBed.compileComponents();
   });
 
   beforeEach(() => {

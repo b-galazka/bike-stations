@@ -1,7 +1,7 @@
-import { BikeStationCoordinates } from '../types/bike-station-coordinates.type';
+import { LatLng } from 'leaflet';
 
 export interface IBikeStation {
-  coordinates: BikeStationCoordinates;
+  coordinates: LatLng;
   id: string;
   bikes: number;
   bikePlaces: number;

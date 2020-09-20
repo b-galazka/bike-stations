@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslocoTestingModule } from '@ngneat/transloco';
+import { LatLng } from 'leaflet';
 
 import { BikeStationComponent } from './bike-station.component';
 import { DistancePipe } from './distance/distance.pipe';
@@ -21,7 +22,7 @@ describe('BikeStationComponent', () => {
 
     component.bikeStation = {
       name: 'name',
-      coordinates: [1, 2],
+      coordinates: new LatLng(1, 2),
       id: 'id',
       bikes: 1,
       bikePlaces: 1,

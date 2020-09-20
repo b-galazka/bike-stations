@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { LatLng } from 'leaflet';
 import { map } from 'rxjs/operators';
 
 import { IBikeStation } from '@bike-stations/interfaces/bike-station.interface';
@@ -32,15 +33,19 @@ export class BikeStationsService extends BaseStateService<IBikeStationsState> {
   }
 
   private mapBikeStationsResponse(res: IBikeStationsResponse): IBikeStation[] {
-    return res.features.map(({ geometry, id, properties }) => ({
-      id,
-      coordinates: geometry.coordinates,
-      bikes: +properties.bikes,
-      bikePlaces: +properties.bike_racks,
-      name: properties.label,
-      // TODO: calc distance
-      distance: null
-    }));
+    return res.features.map(({ geometry, id, properties }) => {
+      const [longitude, latitude] = geometry.coordinates;
+
+      return {
+        id,
+        coordinates: new LatLng(latitude, longitude),
+        bikes: +properties.bikes,
+        bikePlaces: +properties.bike_racks,
+        name: properties.label,
+        // TODO: calc distance
+        distance: null
+      };
+    });
   }
 
   selectBikeStation(bikeStationId: string): void {

@@ -6,11 +6,15 @@ import { environment } from 'src/environments/environment';
 import { BikeStationsService } from './bike-stations.service';
 
 describe('BikeStationsService', () => {
+  const environmentMock: Partial<typeof environment> = {
+    apiUrl: 'apiUrl'
+  };
+
   let service: BikeStationsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [BikeStationsService, { provide: ENVIRONMENT, useValue: environment }],
+      providers: [BikeStationsService, { provide: ENVIRONMENT, useValue: environmentMock }],
       imports: [HttpClientTestingModule]
     });
 
