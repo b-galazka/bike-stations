@@ -3,6 +3,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  HostListener,
+  Inject,
   OnDestroy,
   OnInit,
   ViewChild
@@ -12,6 +14,8 @@ import { Subject } from 'rxjs';
 import { filter, pluck, takeUntil } from 'rxjs/operators';
 
 import { BikeStationsService } from '@bike-stations/services/bike-stations/bike-stations.service';
+import { WINDOW } from '@core/injection-tokens/window.token';
+import { AppService } from '@core/services/app.service';
 import { GeolocationService } from '@core/services/geolocation.service';
 import { LatLng } from 'leaflet';
 import { BikeStationsMapService } from './services/bike-stations-map.service';
@@ -31,10 +35,13 @@ export class BikeStationDetailsPageComponent implements OnInit, AfterViewInit, O
   @ViewChild('map') mapElementRef: ElementRef<HTMLDivElement>;
 
   constructor(
+    @Inject(WINDOW) private readonly window: Window,
     private readonly bikeStationsService: BikeStationsService,
     private readonly activatedRoute: ActivatedRoute,
     private readonly bikeStationsMapService: BikeStationsMapService,
-    private readonly geolocationService: GeolocationService
+    private readonly geolocationService: GeolocationService,
+    private readonly elementRef: ElementRef,
+    private readonly appService: AppService
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +50,7 @@ export class BikeStationDetailsPageComponent implements OnInit, AfterViewInit, O
 
   ngAfterViewInit(): void {
     this.initMap();
+    this.setFixedHeightOnMobileDevices();
   }
 
   private initMap(): void {
@@ -68,6 +76,14 @@ export class BikeStationDetailsPageComponent implements OnInit, AfterViewInit, O
       .subscribe(currentPosition =>
         this.bikeStationsMapService.setCurrentPositionMarker(currentPosition!)
       );
+  }
+
+  @HostListener('window:resize')
+  private setFixedHeightOnMobileDevices(): void {
+    if (this.appService.state.isMobileDevice) {
+      // deal with mobile browser address bar
+      this.elementRef.nativeElement.style.height = `${this.window.innerHeight}px`;
+    }
   }
 
   ngOnDestroy(): void {

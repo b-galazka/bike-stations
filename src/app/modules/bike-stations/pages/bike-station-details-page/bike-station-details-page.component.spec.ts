@@ -6,6 +6,8 @@ import { of } from 'rxjs';
 import { BikeStationComponent } from '@bike-stations/components/bike-station/bike-station.component';
 import { NavbarComponent } from '@bike-stations/components/navbar/navbar.component';
 import { BikeStationsService } from '@bike-stations/services/bike-stations/bike-stations.service';
+import { WINDOW } from '@core/injection-tokens/window.token';
+import { AppService } from '@core/services/app.service';
 import { GeolocationService } from '@core/services/geolocation.service';
 import { getClassMethodsNames } from '@shared/utils/get-class-methods-names.util';
 import { BikeStationDetailsPageComponent } from './bike-station-details-page.component';
@@ -15,6 +17,11 @@ describe('BikeStationDetailsPageComponent', () => {
   const geolocationServiceMock = {
     state: { currentPosition: null },
     state$: of({ currentPosition: null })
+  };
+
+  const appServiceMock = {
+    state: { isMobileDevice: false },
+    state$: of({ isMobileDevice: false })
   };
 
   let component: BikeStationDetailsPageComponent;
@@ -32,7 +39,9 @@ describe('BikeStationDetailsPageComponent', () => {
           provide: BikeStationsService,
           useValue: jasmine.createSpyObj(getClassMethodsNames(BikeStationsService))
         },
-        { provide: GeolocationService, useValue: geolocationServiceMock }
+        { provide: GeolocationService, useValue: geolocationServiceMock },
+        { provide: WINDOW, useValue: window },
+        { provide: AppService, useValue: appServiceMock }
       ],
       imports: [RouterTestingModule]
     });
