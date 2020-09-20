@@ -28,7 +28,8 @@ export class BikeStationsMapService implements OnDestroy {
       zoomControl: false,
       attributionControl: false,
       center: bikeStation.coordinates,
-      zoom: 16
+      zoom: 16,
+      minZoom: 4
     });
 
     this.initGoogleMapsTiles();
