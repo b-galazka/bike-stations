@@ -31,4 +31,28 @@
     line-height: 1;
     color: $green;
   }
+
+  .leaflet-current-position-marker {
+    position: relative;
+    background-color: $blue;
+
+    &,
+    &::after {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-color: $blue;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: -1;
+      animation-name: pulsate;
+      animation-duration: 1.5s;
+      animation-iteration-count: infinite;
+    }
+  }
 }

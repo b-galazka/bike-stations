@@ -14,6 +14,7 @@ export class BikeStationsMapService implements OnDestroy {
   private readonly googleMapsScriptId = 'googleMapsScript';
 
   private map: Leaflet.Map;
+  private currentPositionMarker: Leaflet.Marker;
 
   constructor(
     @Inject(DOCUMENT) private readonly document: Document,
@@ -27,7 +28,7 @@ export class BikeStationsMapService implements OnDestroy {
       zoomControl: false,
       attributionControl: false,
       center: bikeStation.coordinates,
-      zoom: 18
+      zoom: 16
     });
 
     this.initGoogleMapsTiles();
@@ -77,6 +78,24 @@ export class BikeStationsMapService implements OnDestroy {
     const marker = this.leaflet.marker(bikeStation.coordinates, { icon: divIcon });
 
     marker.addTo(this.map);
+  }
+
+  setCurrentPositionMarker(position: Leaflet.LatLng): void {
+    if (!this.currentPositionMarker) {
+      this.initCurrentPositionMarker(position);
+      return;
+    }
+
+    this.currentPositionMarker.setLatLng(position);
+  }
+
+  private initCurrentPositionMarker(position: Leaflet.LatLng): void {
+    const iconTemplate = '<div class="leaflet-current-position-marker"></div>';
+    const divIcon = this.leaflet.divIcon({ html: iconTemplate, iconSize: undefined });
+
+    this.currentPositionMarker = this.leaflet.marker(position, { icon: divIcon });
+
+    this.currentPositionMarker.addTo(this.map);
   }
 
   ngOnDestroy(): void {
