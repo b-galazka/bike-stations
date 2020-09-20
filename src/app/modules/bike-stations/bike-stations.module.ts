@@ -11,7 +11,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { BikeStationDetailsPageComponent } from './pages/bike-station-details-page/bike-station-details-page.component';
 import { BikeStationsListPageComponent } from './pages/bike-stations-list-page/bike-stations-list-page.component';
 import { BikeStationsListComponent } from './pages/bike-stations-list-page/components/bike-stations-list/bike-stations-list.component';
-import { BikeStationsService } from './services/bike-stations/bike-stations.service';
+import { BikeStationsStateService } from './services/bike-stations/bike-stations-state.service';
 
 @NgModule({
   declarations: [
@@ -24,6 +24,6 @@ import { BikeStationsService } from './services/bike-stations/bike-stations.serv
     DistanceUnitTranslationKeyPipe
   ],
   imports: [CommonModule, TranslocoModule, HttpClientModule, BikeStationsRoutingModule],
-  providers: [BikeStationsService]
+  providers: [BikeStationsStateService]
 })
 export class BikeStationsModule {}

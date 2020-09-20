@@ -13,10 +13,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, pluck, takeUntil } from 'rxjs/operators';
 
-import { BikeStationsService } from '@bike-stations/services/bike-stations/bike-stations.service';
+import { BikeStationsStateService } from '@bike-stations/services/bike-stations/bike-stations-state.service';
 import { WINDOW } from '@core/injection-tokens/window.token';
-import { AppService } from '@core/services/app.service';
-import { GeolocationService } from '@core/services/geolocation.service';
+import { AppStateService } from '@core/services/state/app-state.service';
+import { GeolocationStateService } from '@core/services/state/geolocation-state.service';
 import { LatLng } from 'leaflet';
 import { BikeStationsMapService } from './services/bike-stations-map.service';
 
@@ -28,7 +28,7 @@ import { BikeStationsMapService } from './services/bike-stations-map.service';
   providers: [BikeStationsMapService]
 })
 export class BikeStationDetailsPageComponent implements OnInit, AfterViewInit, OnDestroy {
-  readonly bikeStationsState$ = this.bikeStationsService.state$;
+  readonly bikeStationsState$ = this.bikeStationsStateService.state$;
 
   private readonly onDestroy$ = new Subject<void>();
 
@@ -36,16 +36,18 @@ export class BikeStationDetailsPageComponent implements OnInit, AfterViewInit, O
 
   constructor(
     @Inject(WINDOW) private readonly window: Window,
-    private readonly bikeStationsService: BikeStationsService,
+    private readonly bikeStationsStateService: BikeStationsStateService,
     private readonly activatedRoute: ActivatedRoute,
     private readonly bikeStationsMapService: BikeStationsMapService,
-    private readonly geolocationService: GeolocationService,
+    private readonly geolocationStateService: GeolocationStateService,
     private readonly elementRef: ElementRef,
-    private readonly appService: AppService
+    private readonly appStateService: AppStateService
   ) {}
 
   ngOnInit(): void {
-    this.bikeStationsService.selectBikeStation(this.activatedRoute.snapshot.params.bikeStationId);
+    this.bikeStationsStateService.selectBikeStation(
+      this.activatedRoute.snapshot.params.bikeStationId
+    );
   }
 
   ngAfterViewInit(): void {
@@ -54,20 +56,20 @@ export class BikeStationDetailsPageComponent implements OnInit, AfterViewInit, O
   }
 
   private initMap(): void {
-    if (!this.mapElementRef || !this.bikeStationsService.state.selectedBikeStation) {
+    if (!this.mapElementRef || !this.bikeStationsStateService.state.selectedBikeStation) {
       return;
     }
 
     this.bikeStationsMapService.initMap(
       this.mapElementRef.nativeElement,
-      this.bikeStationsService.state.selectedBikeStation
+      this.bikeStationsStateService.state.selectedBikeStation
     );
 
     this.initSettingCurrentPositionOnMap();
   }
 
   private initSettingCurrentPositionOnMap(): void {
-    this.geolocationService.state$
+    this.geolocationStateService.state$
       .pipe(
         pluck('currentPosition'),
         filter(currentPosition => currentPosition instanceof LatLng),
@@ -80,7 +82,7 @@ export class BikeStationDetailsPageComponent implements OnInit, AfterViewInit, O
 
   @HostListener('window:resize')
   private setFixedHeightOnMobileDevices(): void {
-    if (this.appService.state.isMobileDevice) {
+    if (this.appStateService.state.isMobileDevice) {
       // deal with mobile browser address bar
       this.elementRef.nativeElement.style.height = `${this.window.innerHeight}px`;
     }

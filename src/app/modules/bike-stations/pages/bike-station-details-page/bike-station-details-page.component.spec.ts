@@ -5,21 +5,21 @@ import { of } from 'rxjs';
 
 import { BikeStationComponent } from '@bike-stations/components/bike-station/bike-station.component';
 import { NavbarComponent } from '@bike-stations/components/navbar/navbar.component';
-import { BikeStationsService } from '@bike-stations/services/bike-stations/bike-stations.service';
+import { BikeStationsStateService } from '@bike-stations/services/bike-stations/bike-stations-state.service';
 import { WINDOW } from '@core/injection-tokens/window.token';
-import { AppService } from '@core/services/app.service';
-import { GeolocationService } from '@core/services/geolocation.service';
+import { AppStateService } from '@core/services/state/app-state.service';
+import { GeolocationStateService } from '@core/services/state/geolocation-state.service';
 import { getClassMethodsNames } from '@shared/utils/get-class-methods-names.util';
 import { BikeStationDetailsPageComponent } from './bike-station-details-page.component';
 import { BikeStationsMapService } from './services/bike-stations-map.service';
 
 describe('BikeStationDetailsPageComponent', () => {
-  const geolocationServiceMock = {
+  const geolocationStateServiceMock = {
     state: { currentPosition: null },
     state$: of({ currentPosition: null })
   };
 
-  const appServiceMock = {
+  const appStateServiceMock = {
     state: { isMobileDevice: false },
     state$: of({ isMobileDevice: false })
   };
@@ -36,12 +36,12 @@ describe('BikeStationDetailsPageComponent', () => {
       ],
       providers: [
         {
-          provide: BikeStationsService,
-          useValue: jasmine.createSpyObj(getClassMethodsNames(BikeStationsService))
+          provide: BikeStationsStateService,
+          useValue: jasmine.createSpyObj(getClassMethodsNames(BikeStationsStateService))
         },
-        { provide: GeolocationService, useValue: geolocationServiceMock },
+        { provide: GeolocationStateService, useValue: geolocationStateServiceMock },
         { provide: WINDOW, useValue: window },
-        { provide: AppService, useValue: appServiceMock }
+        { provide: AppStateService, useValue: appStateServiceMock }
       ],
       imports: [RouterTestingModule]
     });

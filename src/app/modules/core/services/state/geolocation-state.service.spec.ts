@@ -1,23 +1,23 @@
 import { TestBed } from '@angular/core/testing';
 
 import { NAVIGATOR } from '@core/injection-tokens/navigator.token';
-import { GeolocationService } from './geolocation.service';
+import { GeolocationStateService } from './geolocation-state.service';
 
-describe('GeolocationService', () => {
+describe('GeolocationStateService', () => {
   const navigatorMock = {
     geolocation: {
       watchPosition(): void {}
     }
   };
 
-  let service: GeolocationService;
+  let service: GeolocationStateService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [{ provide: NAVIGATOR, useValue: navigatorMock }]
     });
 
-    service = TestBed.inject(GeolocationService);
+    service = TestBed.inject(GeolocationStateService);
   });
 
   it('should be created', () => {

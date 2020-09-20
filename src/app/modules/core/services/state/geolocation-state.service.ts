@@ -1,14 +1,14 @@
 import { Inject, Injectable } from '@angular/core';
 import { LatLng } from 'leaflet';
 
-import { NAVIGATOR } from '../injection-tokens/navigator.token';
-import { IGeolocationState } from '../interfaces/geolocation-state.interface';
+import { NAVIGATOR } from '@core/injection-tokens/navigator.token';
+import { IGeolocationState } from '@core/interfaces/geolocation-state.interface';
 import { BaseStateService } from './base-state.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GeolocationService extends BaseStateService<IGeolocationState> {
+export class GeolocationStateService extends BaseStateService<IGeolocationState> {
   constructor(@Inject(NAVIGATOR) private readonly navigator: Navigator) {
     super({ currentPosition: null });
     this.initPositionWatching();

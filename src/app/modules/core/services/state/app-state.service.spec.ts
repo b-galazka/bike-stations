@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
 import { getClassMethodsNames } from '@shared/utils/get-class-methods-names.util';
-import { AppService } from './app.service';
-import { UtilsService } from './utils.service';
+import { UtilsService } from '../utils.service';
+import { AppStateService } from './app-state.service';
 
-describe('AppService', () => {
-  let service: AppService;
+describe('AppStateService', () => {
+  let service: AppStateService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -17,7 +17,7 @@ describe('AppService', () => {
       ]
     });
 
-    service = TestBed.inject(AppService);
+    service = TestBed.inject(AppStateService);
   });
 
   it('should be created', () => {

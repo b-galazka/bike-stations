@@ -3,33 +3,33 @@ import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 
 import { ENVIRONMENT } from '@core/injection-tokens/environment.token';
-import { GeolocationService } from '@core/services/geolocation.service';
+import { GeolocationStateService } from '@core/services/state/geolocation-state.service';
 import { environment } from 'src/environments/environment';
-import { BikeStationsService } from './bike-stations.service';
+import { BikeStationsStateService } from './bike-stations-state.service';
 
-describe('BikeStationsService', () => {
+describe('BikeStationsStateService', () => {
   const environmentMock: Partial<typeof environment> = {
     apiUrl: 'apiUrl'
   };
 
-  const geolocationServiceMock = {
+  const geolocationStateServiceMock = {
     state: { currentPosition: null },
     state$: of({ currentPosition: null })
   };
 
-  let service: BikeStationsService;
+  let service: BikeStationsStateService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        BikeStationsService,
+        BikeStationsStateService,
         { provide: ENVIRONMENT, useValue: environmentMock },
-        { provide: GeolocationService, useValue: geolocationServiceMock }
+        { provide: GeolocationStateService, useValue: geolocationStateServiceMock }
       ],
       imports: [HttpClientTestingModule]
     });
 
-    service = TestBed.inject(BikeStationsService);
+    service = TestBed.inject(BikeStationsStateService);
   });
 
   it('should be created', () => {

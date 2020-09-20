@@ -7,19 +7,21 @@ import { filter, map, pluck, takeUntil } from 'rxjs/operators';
 import { IBikeStation } from '@bike-stations/interfaces/bike-station.interface';
 import { IBikeStationsState } from '@bike-stations/interfaces/bike-stations-state.interface';
 import { ENVIRONMENT } from '@core/injection-tokens/environment.token';
-import { BaseStateService } from '@core/services/base-state.service';
-import { GeolocationService } from '@core/services/geolocation.service';
+import { BaseStateService } from '@core/services/state/base-state.service';
+import { GeolocationStateService } from '@core/services/state/geolocation-state.service';
 import { environment } from 'src/environments/environment';
 import { IBikeStationsResponse } from './interfaces/bike-stations-response.interface';
 
 @Injectable()
-export class BikeStationsService extends BaseStateService<IBikeStationsState> implements OnDestroy {
+export class BikeStationsStateService
+  extends BaseStateService<IBikeStationsState>
+  implements OnDestroy {
   private readonly destroy$ = new Subject<void>();
 
   constructor(
     @Inject(ENVIRONMENT) private readonly env: typeof environment,
     private readonly httpClient: HttpClient,
-    private readonly geolocationService: GeolocationService
+    private readonly geolocationStateService: GeolocationStateService
   ) {
     super({
       areBikeStationsLoaded: false,
@@ -31,7 +33,7 @@ export class BikeStationsService extends BaseStateService<IBikeStationsState> im
   }
 
   private initCurrentPositionWatching(): void {
-    this.geolocationService.state$
+    this.geolocationStateService.state$
       .pipe(
         pluck('currentPosition'),
         filter(currentPosition => currentPosition instanceof LatLng),
@@ -77,7 +79,7 @@ export class BikeStationsService extends BaseStateService<IBikeStationsState> im
         bikePlaces: +properties.bike_racks,
         name: properties.label,
         distance:
-          this.geolocationService.state.currentPosition?.distanceTo(stationCoordinates) ?? null
+          this.geolocationStateService.state.currentPosition?.distanceTo(stationCoordinates) ?? null
       };
     });
   }

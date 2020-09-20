@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BikeStationsService } from '@bike-stations/services/bike-stations/bike-stations.service';
+import { BikeStationsStateService } from '@bike-stations/services/bike-stations/bike-stations-state.service';
 import { getClassMethodsNames } from '@shared/utils/get-class-methods-names.util';
 import { BikeStationsGuard } from './bike-stations.guard';
 
@@ -12,8 +12,8 @@ describe('BikeStationsGuard', () => {
       providers: [
         BikeStationsGuard,
         {
-          provide: BikeStationsService,
-          useValue: jasmine.createSpyObj(getClassMethodsNames(BikeStationsService))
+          provide: BikeStationsStateService,
+          useValue: jasmine.createSpyObj(getClassMethodsNames(BikeStationsStateService))
         }
       ]
     });

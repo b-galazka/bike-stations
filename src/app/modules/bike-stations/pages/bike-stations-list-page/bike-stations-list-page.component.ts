@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { BikeStationsService } from '@bike-stations/services/bike-stations/bike-stations.service';
+import { BikeStationsStateService } from '@bike-stations/services/bike-stations/bike-stations-state.service';
 
 @Component({
   selector: 'bs-bike-stations-list-page',
@@ -9,7 +9,7 @@ import { BikeStationsService } from '@bike-stations/services/bike-stations/bike-
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BikeStationsListPageComponent {
-  readonly bikeStationsState$ = this.bikeStationsService.state$;
+  readonly bikeStationsState$ = this.bikeStationsStateService.state$;
 
-  constructor(private readonly bikeStationsService: BikeStationsService) {}
+  constructor(private readonly bikeStationsStateService: BikeStationsStateService) {}
 }
