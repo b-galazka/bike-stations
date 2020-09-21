@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
-import { filter, pluck, takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 
 import { BikeStationsStateService } from '@bike-stations/services/bike-stations/bike-stations-state.service';
 import { AppTitleService } from '@core/services/app-title.service';
@@ -25,7 +25,7 @@ import { BikeStationsMapService } from './services/bike-stations-map.service';
   providers: [BikeStationsMapService]
 })
 export class BikeStationDetailsPageComponent implements OnInit, AfterViewInit, OnDestroy {
-  readonly bikeStationsState$ = this.bikeStationsStateService.state$;
+  readonly selectedBikeStation$ = this.bikeStationsStateService.select('selectedBikeStation');
 
   private readonly onDestroy$ = new Subject<void>();
 
@@ -69,9 +69,9 @@ export class BikeStationDetailsPageComponent implements OnInit, AfterViewInit, O
   }
 
   private initSettingCurrentPositionOnMap(): void {
-    this.geolocationStateService.state$
+    this.geolocationStateService
+      .select('currentPosition')
       .pipe(
-        pluck('currentPosition'),
         filter(currentPosition => currentPosition instanceof LatLng),
         takeUntil(this.onDestroy$)
       )

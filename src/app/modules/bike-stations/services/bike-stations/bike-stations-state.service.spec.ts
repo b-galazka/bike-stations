@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 
 import { ENVIRONMENT } from '@core/injection-tokens/environment.token';
 import { GeolocationStateService } from '@core/services/state/geolocation-state.service';
+import { getClassMethodsNames } from '@shared/utils/get-class-methods-names.util';
 import { environment } from 'src/environments/environment';
 import { BikeStationsStateService } from './bike-stations-state.service';
 
@@ -13,8 +14,8 @@ describe('BikeStationsStateService', () => {
   };
 
   const geolocationStateServiceMock = {
-    state: { currentPosition: null },
-    state$: of({ currentPosition: null })
+    ...jasmine.createSpyObj(getClassMethodsNames(GeolocationStateService)),
+    select: () => of({ currentPosition: null })
   };
 
   let service: BikeStationsStateService;

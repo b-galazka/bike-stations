@@ -5,6 +5,7 @@ import { NavbarComponent } from '@bike-stations/components/navbar/navbar.compone
 import { BikeStationsStateService } from '@bike-stations/services/bike-stations/bike-stations-state.service';
 import { getClassMethodsNames } from '@shared/utils/get-class-methods-names.util';
 import { BikeStationsListPageComponent } from './bike-stations-list-page.component';
+import { BikeStationsListComponent } from './components/bike-stations-list/bike-stations-list.component';
 
 describe('BikeStationsListPageComponent', () => {
   let component: BikeStationsListPageComponent;
@@ -12,7 +13,11 @@ describe('BikeStationsListPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BikeStationsListPageComponent, MockComponent(NavbarComponent)],
+      declarations: [
+        BikeStationsListPageComponent,
+        MockComponent(NavbarComponent),
+        MockComponent(BikeStationsListComponent)
+      ],
       providers: [
         {
           provide: BikeStationsStateService,

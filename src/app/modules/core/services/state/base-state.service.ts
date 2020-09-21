@@ -1,8 +1,7 @@
 import { BehaviorSubject, Observable } from 'rxjs';
+import { distinctUntilChanged, pluck } from 'rxjs/operators';
 
 export abstract class BaseStateService<T> {
-  readonly state$: Observable<T>;
-
   // tslint:disable-next-line:variable-name
   private readonly _state: BehaviorSubject<T>;
 
@@ -12,7 +11,10 @@ export abstract class BaseStateService<T> {
 
   constructor(initialState: T) {
     this._state = new BehaviorSubject<T>(initialState);
-    this.state$ = this._state.asObservable();
+  }
+
+  select<K extends keyof T>(key: K): Observable<T[K]> {
+    return this._state.pipe(pluck(key), distinctUntilChanged());
   }
 
   protected setState(state: Partial<T>): void {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
-import { first, pluck } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 
 import { BikeStationsStateService } from '../services/bike-stations/bike-stations-state.service';
 
@@ -16,9 +16,8 @@ export class BikeStationsGuard implements CanActivate {
 
     this.bikeStationsStateService.loadBikeStations();
 
-    return this.bikeStationsStateService.state$.pipe(
-      pluck('areBikeStationsLoaded'),
-      first(areBikeStationsLoaded => areBikeStationsLoaded)
-    );
+    return this.bikeStationsStateService
+      .select('areBikeStationsLoaded')
+      .pipe(first(areBikeStationsLoaded => areBikeStationsLoaded));
   }
 }

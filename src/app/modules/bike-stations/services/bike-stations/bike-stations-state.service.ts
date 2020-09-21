@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { LatLng } from 'leaflet';
 import { Subject } from 'rxjs';
-import { filter, map, pluck, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 
 import { IBikeStation } from '@bike-stations/interfaces/bike-station.interface';
 import { IBikeStationsState } from '@bike-stations/interfaces/bike-stations-state.interface';
@@ -33,9 +33,9 @@ export class BikeStationsStateService
   }
 
   private initCurrentPositionWatching(): void {
-    this.geolocationStateService.state$
+    this.geolocationStateService
+      .select('currentPosition')
       .pipe(
-        pluck('currentPosition'),
         filter(currentPosition => currentPosition instanceof LatLng),
         takeUntil(this.destroy$)
       )

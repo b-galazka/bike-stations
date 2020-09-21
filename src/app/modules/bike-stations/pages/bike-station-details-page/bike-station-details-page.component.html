@@ -1,4 +1,4 @@
-<ng-container *ngIf="bikeStationsState$ | async as state">
+<ng-container *ngIf="{ selectedBikeStation: selectedBikeStation$ | async } as state">
   <bs-navbar class="navbar" link="../"></bs-navbar>
 
   <p *ngIf="!state.selectedBikeStation; else bikeStationDetails" class="error-message">

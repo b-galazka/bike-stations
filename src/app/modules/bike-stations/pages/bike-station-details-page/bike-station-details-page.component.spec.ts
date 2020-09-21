@@ -7,6 +7,7 @@ import { BikeStationComponent } from '@bike-stations/components/bike-station/bik
 import { NavbarComponent } from '@bike-stations/components/navbar/navbar.component';
 import { BikeStationsStateService } from '@bike-stations/services/bike-stations/bike-stations-state.service';
 import { GeolocationStateService } from '@core/services/state/geolocation-state.service';
+import { TranslocoTestingModule } from '@ngneat/transloco';
 import { getClassMethodsNames } from '@shared/utils/get-class-methods-names.util';
 import { BikeStationDetailsPageComponent } from './bike-station-details-page.component';
 import { BikeStationsMapService } from './services/bike-stations-map.service';
@@ -17,11 +18,10 @@ describe('BikeStationDetailsPageComponent', () => {
     state$: of({ currentPosition: null })
   };
 
-  const bikeStationsStateServiceMock = jasmine.createSpyObj(
-    getClassMethodsNames(BikeStationsStateService)
-  );
-
-  bikeStationsStateServiceMock.state = {};
+  const bikeStationsStateServiceMock = {
+    ...jasmine.createSpyObj(getClassMethodsNames(BikeStationsStateService)),
+    state: {}
+  };
 
   let component: BikeStationDetailsPageComponent;
   let fixture: ComponentFixture<BikeStationDetailsPageComponent>;
@@ -40,7 +40,7 @@ describe('BikeStationDetailsPageComponent', () => {
         },
         { provide: GeolocationStateService, useValue: geolocationStateServiceMock }
       ],
-      imports: [RouterTestingModule]
+      imports: [RouterTestingModule, TranslocoTestingModule]
     });
 
     TestBed.overrideComponent(BikeStationDetailsPageComponent, {

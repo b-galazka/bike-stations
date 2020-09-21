@@ -10,7 +10,7 @@ import { AppTitleService } from '@core/services/app-title.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BikeStationsListPageComponent implements OnInit {
-  readonly bikeStationsState$ = this.bikeStationsStateService.state$;
+  readonly bikeStations$ = this.bikeStationsStateService.select('bikeStations');
 
   constructor(
     private readonly bikeStationsStateService: BikeStationsStateService,
