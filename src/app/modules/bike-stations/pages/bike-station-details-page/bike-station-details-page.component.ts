@@ -3,8 +3,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostListener,
-  Inject,
   OnDestroy,
   OnInit,
   ViewChild
@@ -14,9 +12,7 @@ import { Subject } from 'rxjs';
 import { filter, pluck, takeUntil } from 'rxjs/operators';
 
 import { BikeStationsStateService } from '@bike-stations/services/bike-stations/bike-stations-state.service';
-import { WINDOW } from '@core/injection-tokens/window.token';
 import { AppTitleService } from '@core/services/app-title.service';
-import { AppStateService } from '@core/services/state/app-state.service';
 import { GeolocationStateService } from '@core/services/state/geolocation-state.service';
 import { LatLng } from 'leaflet';
 import { BikeStationsMapService } from './services/bike-stations-map.service';
@@ -36,13 +32,10 @@ export class BikeStationDetailsPageComponent implements OnInit, AfterViewInit, O
   @ViewChild('map') mapElementRef: ElementRef<HTMLDivElement>;
 
   constructor(
-    @Inject(WINDOW) private readonly window: Window,
     private readonly bikeStationsStateService: BikeStationsStateService,
     private readonly activatedRoute: ActivatedRoute,
     private readonly bikeStationsMapService: BikeStationsMapService,
     private readonly geolocationStateService: GeolocationStateService,
-    private readonly elementRef: ElementRef,
-    private readonly appStateService: AppStateService,
     private readonly appTitleService: AppTitleService
   ) {}
 
@@ -60,7 +53,6 @@ export class BikeStationDetailsPageComponent implements OnInit, AfterViewInit, O
 
   ngAfterViewInit(): void {
     this.initMap();
-    this.setFixedHeightOnMobileDevices();
   }
 
   private initMap(): void {
@@ -86,14 +78,6 @@ export class BikeStationDetailsPageComponent implements OnInit, AfterViewInit, O
       .subscribe(currentPosition =>
         this.bikeStationsMapService.setCurrentPositionMarker(currentPosition!)
       );
-  }
-
-  @HostListener('window:resize')
-  private setFixedHeightOnMobileDevices(): void {
-    if (this.appStateService.state.isMobileDevice) {
-      // deal with mobile browser address bar
-      this.elementRef.nativeElement.style.height = `${this.window.innerHeight}px`;
-    }
   }
 
   ngOnDestroy(): void {

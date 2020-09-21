@@ -15,7 +15,6 @@ import { CONFIG } from './injection-tokens/config.token';
 import { ENVIRONMENT } from './injection-tokens/environment.token';
 import { LEAFLET } from './injection-tokens/leaflet.token';
 import { NAVIGATOR } from './injection-tokens/navigator.token';
-import { WINDOW } from './injection-tokens/window.token';
 import { TranslationsLoaderService } from './services/translations-loader.service';
 
 @NgModule({
@@ -25,7 +24,6 @@ import { TranslationsLoaderService } from './services/translations-loader.servic
     { provide: CONFIG, useValue: config },
     { provide: NAVIGATOR, useValue: navigator },
     { provide: LEAFLET, useValue: Leaflet },
-    { provide: WINDOW, useValue: window },
 
     {
       provide: TRANSLOCO_CONFIG,
