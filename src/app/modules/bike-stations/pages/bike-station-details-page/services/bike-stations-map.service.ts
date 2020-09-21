@@ -29,7 +29,11 @@ export class BikeStationsMapService implements OnDestroy {
       attributionControl: false,
       center: bikeStation.coordinates,
       zoom: 16,
-      minZoom: 4
+      minZoom: 4,
+      maxBounds: [
+        [-90, -180],
+        [90, 180]
+      ]
     });
 
     this.initGoogleMapsTiles();
